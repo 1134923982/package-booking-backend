@@ -2,6 +2,7 @@ package com.oocl.packagebooking.controller;
 
 import com.oocl.packagebooking.model.PackageInformation;
 import com.oocl.packagebooking.repository.PackageInformationRepository;
+import com.oocl.packagebooking.service.PackageInformationService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,7 @@ public class PackageInformationControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private PackageInformationRepository mockPackageInformationRepository;
+    private PackageInformationService mockPackageInformationService;
 
     private List<PackageInformation> packageInformations = new ArrayList<>();
     @Before
@@ -44,7 +45,7 @@ public class PackageInformationControllerTest {
     @Test
     public void should_return_all_package_information_when_request_all_packages() throws Exception {
         Mockito.when(
-                mockPackageInformationRepository.findAll()
+                mockPackageInformationService.getAllPackageInformation()
         ).thenReturn(packageInformations);
 
         mockMvc.perform(get("/package-informations"))
@@ -57,7 +58,7 @@ public class PackageInformationControllerTest {
     public void should_return_add_package_information_when_add_package_to_store() throws Exception {
         PackageInformation packageInformation = new PackageInformation(2, "王五", "123454", 0, null);
         Mockito.when(
-                mockPackageInformationRepository.save(Mockito.any())
+                mockPackageInformationService.addPackageInformation(Mockito.any())
         ).thenReturn(packageInformation);
 
         mockMvc.perform(post("/package-informations").contentType(MediaType.APPLICATION_JSON_UTF8).content("{}"))
@@ -69,7 +70,7 @@ public class PackageInformationControllerTest {
     @Test
     public void should_return_all_package_information_by_state_when_get_packages_by_state() throws Exception {
         Mockito.when(
-                mockPackageInformationRepository.findAllByState(Mockito.anyInt())
+                mockPackageInformationService.getAllPackageInformationByStatus(Mockito.anyInt())
         ).thenReturn(packageInformations);
 
         mockMvc.perform(get("/package-informations/2"))
