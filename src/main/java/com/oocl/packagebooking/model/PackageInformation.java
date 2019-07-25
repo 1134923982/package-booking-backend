@@ -9,7 +9,6 @@ import java.util.Date;
 @Entity
 public class PackageInformation {
     @Id
-    @GeneratedValue()
     private long id;
     private String username;
     private String iphoneNumber;
@@ -19,6 +18,14 @@ public class PackageInformation {
     private Date bookingTime;
 
     public PackageInformation() {
+    }
+
+    public PackageInformation(long id, String username, String iphoneNumber, int state, Date bookingTime) {
+        this.id = id;
+        this.username = username;
+        this.iphoneNumber = iphoneNumber;
+        this.state = state;
+        this.bookingTime = bookingTime;
     }
 
     public long getId() {
