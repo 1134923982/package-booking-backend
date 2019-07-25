@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:3001")
@@ -17,19 +18,35 @@ public class PackageInformationController {
     private PackageInformationRepository packageInformationRepository;
 
     @GetMapping("/package-informations")
-    public ResponseEntity getAllPackageInformation(){
+    public ResponseEntity getAllPackageInformation() {
         List<PackageInformation> allPackageInformation = packageInformationRepository.findAll();
         return ResponseEntity.ok(allPackageInformation);
     }
 
     @PostMapping("/package-informations")
-    public ResponseEntity addPackageInformation(@RequestBody PackageInformation packageInformation){
+    public ResponseEntity addPackageInformation(@RequestBody PackageInformation packageInformation) {
 //        packageInformation.setBookingTime(new Date());
         PackageInformation information = packageInformationRepository.save(packageInformation);
         return ResponseEntity.ok(information);
     }
 
+    @PutMapping("/package-informations/{id}")
+    public ResponseEntity updatePackageInformation(@PathVariable long id, @RequestBody PackageInformation packageInformation) {
+        PackageInformation information1 = packageInformationRepository.findById(id).orElse(null);
+        if (information1 != null) {
+            packageInformation.setId(id);
+            PackageInformation information = packageInformationRepository.save(packageInformation);
+            return ResponseEntity.ok(information);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
+    @GetMapping("/package-informations/{state}")
+    public ResponseEntity getAllPackageInformationByStatus(@PathVariable int state) {
+        List<PackageInformation> packages = packageInformationRepository.findAllByState(state);
+        return ResponseEntity.ok(packages);
+    }
 
 
 }

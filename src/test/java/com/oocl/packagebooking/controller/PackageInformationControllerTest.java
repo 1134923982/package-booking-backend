@@ -66,4 +66,16 @@ public class PackageInformationControllerTest {
                 .andExpect(content().json("{\"id\":2,\"username\":\"王五\",\"iphoneNumber\":\"123454\",\"state\":0,\"bookingTime\":null}"));
     }
 
+    @Test
+    public void should_return_all_package_information_by_state_when_get_packages_by_state() throws Exception {
+        Mockito.when(
+                mockPackageInformationRepository.findAllByState(Mockito.anyInt())
+        ).thenReturn(packageInformations);
+
+        mockMvc.perform(get("/package-informations/2"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("[{\"id\":1,\"username\":\"张三\",\"iphoneNumber\":\"12345\",\"state\":0,\"bookingTime\":null},{\"id\":2,\"username\":\"王五\",\"iphoneNumber\":\"123454\",\"state\":0,\"bookingTime\":null}]"));
+    }
+
 }

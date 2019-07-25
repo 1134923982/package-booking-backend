@@ -13,8 +13,7 @@ public class PackageInformation {
     private String username;
     private String iphoneNumber;
 
-    @Column(columnDefinition = "boolean default 0")
-    private int state;
+    private Integer state;
     private Date bookingTime;
 
     public PackageInformation() {
