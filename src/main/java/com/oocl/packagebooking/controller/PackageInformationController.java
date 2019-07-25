@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+//@CrossOrigin(origins = "http://localhost:3001")
 public class PackageInformationController {
 
     @Autowired
@@ -21,12 +22,12 @@ public class PackageInformationController {
         return ResponseEntity.ok(allPackageInformation);
     }
 
-//    @PostMapping("/package-informations")
-//    public ResponseEntity addPackageInformation(@RequestBody PackageInformation packageInformation){
+    @PostMapping("/package-informations")
+    public ResponseEntity addPackageInformation(@RequestBody PackageInformation packageInformation){
 //        packageInformation.setBookingTime(new Date());
-//        PackageInformation information = packageInformationRepository.save(packageInformation);
-//        return ResponseEntity.ok(information);
-//    }
+        PackageInformation information = packageInformationRepository.save(packageInformation);
+        return ResponseEntity.ok(information);
+    }
 
 
 
